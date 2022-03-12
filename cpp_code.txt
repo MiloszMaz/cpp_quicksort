@@ -1,0 +1,73 @@
+#include <iostream>
+
+using namespace std;
+
+// funkcja rekursywna
+void quicksort(int *myTab, int left, int right)
+{
+    // tworzymy skróty do zmiennych
+    int l = left;
+    int r = right;
+
+    // znajdujemy element środkowy
+    int m = myTab[(l+r)/2];
+
+    do
+    {
+        // jeżeli początkowy element jest mniejszy od środkowego to zostawiamy
+        while(myTab[l] < m)
+        {
+            l++;
+        }
+
+        // jeżeli końcowy element jest większy od środkowego to zostawiamy
+        while(myTab[r] > m)
+        {
+            r--;
+        }
+
+        // jeżeli początkowy jest mniejszy lub równy końcowemu to zamieniamy miejscami liczby
+        if(l <= r)
+        {
+            swap(myTab[l], myTab[r]);
+
+            l++;
+            r--;
+        }
+        // kończymy pętle jeżeli początkowy element jest większy od końcowego
+    } while(l <= r);
+
+    // jeżeli początkowy element w inicjacji funkcji jest mniejszy niż końcowy po powyższej pętli to wykonujemy ponownie funkcję quicksort
+    if(left < r)
+    {
+        quicksort(myTab, left, r);
+    }
+    // jeżeli końcowy element w inicjacji funkcji jest większy niż początkowy po powyższej pętli to wykonujemy ponownie funkcję quicksort
+    if(right > l)
+    {
+        quicksort(myTab, l, right);
+    }
+}
+
+int main()
+{
+    // ile elementów ma być w naszej tablicy
+    int n = 10;
+
+    // tworzymy tablicę i wstawiamy 10 elementów
+    int myTab[] = {9, 3, 4, 2, 7, 6, 5, 1, 8, 0};
+
+    // uruchamiamy funkcję algorytmu
+    // myTab - tablica z liczbami
+    // 0 - początkowy element tablicy
+    // n-1 - ostatni element tablicy
+    quicksort(myTab, 0, n-1);
+
+    // wyświetlamy tablicę
+    for(int i=0; i < n; i++)
+    {
+        cout << "myTab[" << i << "] = " << myTab[i] << endl;
+    }
+
+    return 0;
+}
